@@ -16,8 +16,8 @@
 ## 构建
 
 ```bash
-cmake -S /home/runner/work/ImageDeduplication/ImageDeduplication -B /home/runner/work/ImageDeduplication/ImageDeduplication/build
-cmake --build /home/runner/work/ImageDeduplication/ImageDeduplication/build
+cmake -S . -B build
+cmake --build build
 ```
 
 ### 依赖

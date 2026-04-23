@@ -189,6 +189,7 @@ void MainWindow::buildUi() {
     logEdit_->setReadOnly(true);
     logLayout->addWidget(logEdit_);
     auto* dock = new QDockWidget(tr("扫描日志"), this);
+    dock->setObjectName(QStringLiteral("logDock"));
     dock->setWidget(logDockContainer);
     addDockWidget(Qt::BottomDockWidgetArea, dock);
 
@@ -228,6 +229,7 @@ void MainWindow::createMenus() {
 
 void MainWindow::createToolBar() {
     auto* toolbar = addToolBar(tr("快捷操作"));
+    toolbar->setObjectName(QStringLiteral("mainToolbar"));
     toolbar->addAction(tr("添加目录"), this, &MainWindow::addDirectory);
     toolbar->addAction(tr("扫描"), this, &MainWindow::startScan);
     toolbar->addAction(tr("导出 CSV"), this, &MainWindow::exportCsv);
@@ -320,7 +322,7 @@ void MainWindow::refreshGroups(const QList<SimilarGroupData>& groups) {
 }
 
 void MainWindow::updateThresholdLabel(int value) {
-    thresholdValueLabel_->setText(QStringLiteral("%1%") .arg(value));
+    thresholdValueLabel_->setText(QStringLiteral("%1%").arg(value));
 }
 
 ScanOptions MainWindow::currentScanOptions() const {
@@ -586,7 +588,7 @@ void MainWindow::openRecycleBin() {
 #ifdef Q_OS_WIN
     QProcess::startDetached(QStringLiteral("explorer.exe"), {QStringLiteral("shell:RecycleBinFolder")});
 #else
-    QMessageBox::information(this, tr("提示"), tr("当前平台不支持直接打开 Windows 回收站。"));
+    QMessageBox::information(this, tr("提示"), tr("当前平台不支持直接打开回收站。"));
 #endif
 }
 

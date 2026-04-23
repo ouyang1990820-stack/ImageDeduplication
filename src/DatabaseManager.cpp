@@ -382,7 +382,7 @@ QList<SimilarGroupData> DatabaseManager::loadGroups(const QString& algorithm) co
         member.ignored = query.value(4).toInt() != 0;
         group.members.append(member);
         group.totalSize += image.fileSize;
-        if (group.representative.id < 0 || member.similarity >= 100.0 || image.fileSize > group.representative.fileSize) {
+        if (group.representative.id < 0 || image.fileSize > group.representative.fileSize) {
             group.representative = image;
         }
     }

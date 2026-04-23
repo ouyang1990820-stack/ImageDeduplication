@@ -67,7 +67,7 @@ QByteArray ImageHasher::computeDifferenceHash(const QImage& image) {
     bits.reserve(64);
     for (int y = 0; y < 8; ++y) {
         for (int x = 0; x < 8; ++x) {
-            bits.append(pixelGray(gray, x, y) <= pixelGray(gray, x + 1, y) ? 1 : 0);
+            bits.append(pixelGray(gray, x, y) < pixelGray(gray, x + 1, y) ? 1 : 0);
         }
     }
     return packBits(bits);
@@ -112,7 +112,6 @@ QByteArray ImageHasher::computePerceptionHash(const QImage& image) {
 
     QVector<int> bits;
     bits.reserve(64);
-    bits.append(1);
     for (double value : coefficients) {
         bits.append(value >= median ? 1 : 0);
     }

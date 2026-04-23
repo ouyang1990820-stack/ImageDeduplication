@@ -14,18 +14,21 @@ int main(int argc, char* argv[]) {
 
     const QString autoScanDirectory = qEnvironmentVariable("IMAGE_DEDUP_AUTOSCAN_DIR");
     if (!autoScanDirectory.isEmpty()) {
-        QTimer::singleShot(0, &window, [&window, autoScanDirectory]() {
-            window.addDirectoryPath(autoScanDirectory);
-            QMetaObject::invokeMethod(&window, "startScan", Qt::QueuedConnection);
+        auto* windowPtr = &window;
+        QTimer::singleShot(0, &window, [windowPtr, autoScanDirectory]() {
+            windowPtr->addDirectoryPath(autoScanDirectory);
+            QMetaObject::invokeMethod(windowPtr, "startScan", Qt::QueuedConnection);
         });
     }
 
     const QString screenshotPath = qEnvironmentVariable("IMAGE_DEDUP_SCREENSHOT");
     if (!screenshotPath.isEmpty()) {
-        QTimer::singleShot(2500, &window, [&window, screenshotPath, &application]() {
-            window.grab().save(screenshotPath);
+        auto* windowPtr = &window;
+        auto* applicationPtr = &application;
+        QTimer::singleShot(2500, &window, [windowPtr, screenshotPath, applicationPtr]() {
+            windowPtr->grab().save(screenshotPath);
             if (qEnvironmentVariableIsSet("IMAGE_DEDUP_AUTOQUIT")) {
-                application.quit();
+                applicationPtr->quit();
             }
         });
     }
